@@ -16,7 +16,7 @@ def handler(event):
     print("=== Handler was called ===")
     prompt = event.get("input", {}).get("prompt", "")
     print(f"Prompt: {prompt}")
-    return {"output": f"Echo: {prompt}"}
+    
 
     
     formatted = f"<|user|>\n{prompt}\n<|assistant|>\n"
