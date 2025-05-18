@@ -1,5 +1,5 @@
 name: osol-serverless-endpoint
-image: python:3.10-slim
+image: runpod/python:3.10-uv
 containerDisk: 10
 gpu: true
 gpuCount: 1
