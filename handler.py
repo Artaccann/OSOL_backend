@@ -13,9 +13,11 @@ model, tokenizer = FastLanguageModel.from_pretrained(
 model.eval()
 
 def handler(event):
-    print("DEBUG: Handler started.")
-    prompt = event["input"].get("prompt", "")
-    print(f"DEBUG: Prompt received: {prompt}")
+    print("=== Handler was called ===")
+    prompt = event.get("input", {}).get("prompt", "")
+    print(f"Prompt: {prompt}")
+    return {"output": f"Echo: {prompt}"}
+
     
     formatted = f"<|user|>\n{prompt}\n<|assistant|>\n"
     inputs = tokenizer(formatted, return_tensors="pt").to(model.device)
