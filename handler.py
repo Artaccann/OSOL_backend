@@ -1,8 +1,7 @@
 # handler.py
 
 from unsloth import FastLanguageModel
-import torch
-import os
+import torch, os
 
 model, tokenizer = FastLanguageModel.from_pretrained(
     model_name=os.environ.get("HF_MODEL_NAME"),
