@@ -15,3 +15,5 @@ RUN pip install --upgrade pip && \
 # RUN echo "MODEL:" $HF_MODEL_NAME
 
 # Endpoint očekává handler.handler → neuvádíš žádný CMD!
+CMD ["handler.handler"]
+
