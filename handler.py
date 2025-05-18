@@ -18,4 +18,7 @@ def handler(event):
     inputs = tokenizer(formatted, return_tensors="pt").to(model.device)
     outputs = model.generate(**inputs, max_new_tokens=200)
     response = tokenizer.decode(outputs[0], skip_special_tokens=True)
+
+    print("RAW RESPONSE:", response)
+
     return {"output": response.split("<|assistant|>\n")[-1].strip()}
