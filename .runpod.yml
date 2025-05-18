@@ -9,4 +9,4 @@ entrypoint: handler.handler
 
 env:
   HUGGINGFACE_TOKEN: ${HUGGINGFACE_TOKEN}
-  HF_MODEL_NAME: anne/lora_modul_3B
+  HF_MODEL_NAME: Artaccann/OSOL_backend
