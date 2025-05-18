@@ -10,7 +10,7 @@ load_dotenv()
 app = FastAPI()
 
 # ⏬ Nastavení
-MODEL_NAME = "anne/OSOL_backend"  # tvůj LoRA model na HF
+MODEL_NAME = "Artaccann/OSOL_backend"  # tvůj LoRA model na HF
 MAX_TOKENS = 200
 
 # ⏬ Načtení modelu + tokenizeru z HF
