@@ -13,12 +13,21 @@ model, tokenizer = FastLanguageModel.from_pretrained(
 model.eval()
 
 def handler(event):
+    print("DEBUG: Handler started.")
     prompt = event["input"].get("prompt", "")
+    print(f"DEBUG: Prompt received: {prompt}")
+    
     formatted = f"<|user|>\n{prompt}\n<|assistant|>\n"
     inputs = tokenizer(formatted, return_tensors="pt").to(model.device)
     outputs = model.generate(**inputs, max_new_tokens=200)
+    
+    print("DEBUG: Generation complete.")
+    
     response = tokenizer.decode(outputs[0], skip_special_tokens=True)
+    print(f"DEBUG: Raw response: {response}")
+    
+    final = response.split("<|assistant|>\n")[-1].strip()
+    print(f"DEBUG: Final output: {final}")
+    
+    return {"output": final}
 
-    print("RAW RESPONSE:", response)
-
-    return {"output": response.split("<|assistant|>\n")[-1].strip()}
