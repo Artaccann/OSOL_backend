@@ -13,5 +13,7 @@ RUN pip install --upgrade pip && \
 
 # Volitelně: zkontroluj model existenci
 # RUN echo "MODEL:" $HF_MODEL_NAME
+RUN echo "📁 Obsah složky /app:" && ls -la /app
+RUN echo "🐍 Spouštíme handler.py test:" && python handler.py || echo "❌ Python handler.py selhal"
 
 # Endpoint očekává handler.handler → neuvádíš žádný CMD!
