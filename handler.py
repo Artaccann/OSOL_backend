@@ -1,6 +1,6 @@
 from unsloth import FastLanguageModel
 import torch, os
-import runpod  # ⬅️ klíčové!
+import runpod
 
 model, tokenizer = FastLanguageModel.from_pretrained(
     model_name=os.environ.get("HF_MODEL_NAME"),
@@ -33,3 +33,7 @@ def handler(event):
     print(f"Final output: {final}")
 
     return {"output": final or "⚠️ Empty response"}
+
+# ✅ TADY JE TEN KLÍČ:
+if __name__ == "__main__":
+    runpod.serverless.start({"handler": handler})
