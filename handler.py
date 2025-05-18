@@ -10,6 +10,8 @@ model, tokenizer = FastLanguageModel.from_pretrained(
     load_in_4bit=True
 )
 model.eval()
+print("Handler init OK ✅")
+
 
 # ⏬ Hlavní handler
 def handler(event):
