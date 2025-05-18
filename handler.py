@@ -1,39 +1,8 @@
-from unsloth import FastLanguageModel
-import torch, os
 import runpod
 
-model, tokenizer = FastLanguageModel.from_pretrained(
-    model_name=os.environ.get("HF_MODEL_NAME"),
-    token=os.environ.get("HUGGINGFACE_TOKEN"),
-    max_seq_length=2048,
-    dtype=torch.float16,
-    load_in_4bit=True
-)
-model.eval()
-
 def handler(event):
-    print("=== Handler was called ===")
+    print("=== HANDLER TRIGGERED ===")
     prompt = event.get("input", {}).get("prompt", "")
-    print(f"Prompt: {prompt}")
+    return {"output": f"Echo: {prompt}"}
 
-    formatted = f"<|user|>\n{prompt}\n<|assistant|>\n"
-    inputs = tokenizer(formatted, return_tensors="pt").to(model.device)
-    outputs = model.generate(**inputs, max_new_tokens=200)
-    
-    print("=== Generation finished ===")
-    print(f"Generated tokens: {outputs}")
-
-    response = tokenizer.decode(outputs[0], skip_special_tokens=True)
-    print(f"Decoded response: {response}")
-
-    if "<|assistant|>" not in response:
-        print("⚠️ Warning: <|assistant|> not found in response")
-
-    final = response.split("<|assistant|>\n")[-1].strip()
-    print(f"Final output: {final}")
-
-    return {"output": final or "⚠️ Empty response"}
-
-# ✅ TADY JE TEN KLÍČ:
 runpod.serverless.start({"handler": handler})
-
