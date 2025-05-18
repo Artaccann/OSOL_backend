@@ -1,16 +1,12 @@
-image: runpod/pytorch:2.4.0-py3.11-cuda12.1-devel-ubuntu22.04
-containerDisk: 40
+name: osol-serverless-endpoint
+image: python:3.10-slim
+containerDisk: 10
+gpu: true
 gpuCount: 1
-ports:
-  - port: 8000
-    expose: true
+accelerator: A10G
+
+entrypoint: handler.handler
 
 env:
   HUGGINGFACE_TOKEN: ${HUGGINGFACE_TOKEN}
-  HF_MODEL_NAME: ${HF_MODEL_NAME}
-
-startCommand: >
-  bash -c "git clone https://github.com/Artaccann/OSOL_backend.git &&
-           cd OSOL_backend &&
-           pip install -r requirements.txt &&
-           bash start.sh"
+  HF_MODEL_NAME: anne/lora_modul_3B
