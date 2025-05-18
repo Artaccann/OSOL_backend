@@ -16,4 +16,6 @@ RUN pip install --upgrade pip && \
 RUN echo "📁 Obsah složky /app:" && ls -la /app
 RUN echo "🐍 Spouštíme handler.py test:" && python handler.py || echo "❌ Python handler.py selhal"
 
+CMD ["python", "handler.py"]
+
 # Endpoint očekává handler.handler → neuvádíš žádný CMD!
