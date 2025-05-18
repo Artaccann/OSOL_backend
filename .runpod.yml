@@ -1,6 +1,6 @@
 name: osol-serverless-endpoint
 image: .
-entrypoint: handler.handler
+entrypoint: handler
 containerDisk: 10
 gpu: true
 gpuCount: 1
