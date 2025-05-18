@@ -1,11 +1,10 @@
 name: osol-serverless-endpoint
 image: .
+entrypoint: handler.handler
 containerDisk: 10
 gpu: true
 gpuCount: 1
 accelerator: A10G
-
-entrypoint: handler.handler
 
 env:
   HUGGINGFACE_TOKEN: ${HUGGINGFACE_TOKEN}
