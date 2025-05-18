@@ -35,5 +35,5 @@ def handler(event):
     return {"output": final or "⚠️ Empty response"}
 
 # ✅ TADY JE TEN KLÍČ:
-if __name__ == "__main__":
-    runpod.serverless.start({"handler": handler})
+runpod.serverless.start({"handler": handler})
+
