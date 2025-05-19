@@ -1,17 +1,18 @@
 FROM python:3.10-slim
 
+# Pracovní složka
 WORKDIR /app
 
-# Stáhneš requirements
+# Zkopíruj requirements a nainstaluj závislosti
 COPY requirements.txt .
 
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
-# Nakopíruješ zbytek
+# Zkopíruj zbytek projektu
 COPY . .
 
-# Exponuješ port pro API
+# Port pro FastAPI
 EXPOSE 7860
 
-# Spouštíš appku – uprav podle svého backendu
-CMD ["python", "main.py"]
+# Start přes uvicorn
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "7860"]
