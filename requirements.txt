@@ -1,10 +1,7 @@
 fastapi
 uvicorn
+python-dotenv
+torch
 transformers
 peft
-torch
 unsloth
-python-dotenv
-accelerate           # pro kompatibilitu s HF/Unsloth modely
-safetensors          # rychlejší a bezpečnější načítání modelů
-requests             # pro HTTP požadavky (občas potřebuješ pro dotazy na HF nebo logiku ve hrách)
