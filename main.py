@@ -15,14 +15,18 @@ app = FastAPI()
 MODEL_NAME = os.environ.get("HF_MODEL_NAME", "Artaccann/OSOL_backend")
 MAX_TOKENS = 200
 
-# ⏬ Načtení modelu + tokenizeru z HF
+# ⏬ Detekce CPU → safe fallback pro Render bez GPU
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+# ⏬ Načtení modelu + tokenizeru
 model, tokenizer = FastLanguageModel.from_pretrained(
     model_name=MODEL_NAME,
     token=os.environ.get("HUGGINGFACE_TOKEN"),
     max_seq_length=2048,
-    dtype=torch.float16,
-    load_in_4bit=True
+    dtype=torch.float32,             # ⛑ float16 crashuje na CPU
+    load_in_4bit=False               # ⛑ 4bit nenajede bez GPU
 )
+model.to(device)
 model.eval()
 
 # ⏬ Pydantic schéma
@@ -32,7 +36,7 @@ class ChatRequest(BaseModel):
 @app.post("/chat")
 def chat(req: ChatRequest):
     prompt = f"<|user|>\n{req.user_input}\n<|assistant|>\n"
-    inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
+    inputs = tokenizer(prompt, return_tensors="pt").to(device)
 
     with torch.no_grad():
         outputs = model.generate(
@@ -46,7 +50,6 @@ def chat(req: ChatRequest):
     response = tokenizer.decode(outputs[0], skip_special_tokens=True)
     reply = response.split("<|assistant|>\n")[-1].strip()
 
-    # 🧠 Pokus o parsování JSON odpovědi
     try:
         parsed = json.loads(reply)
         return JSONResponse(content=parsed)
